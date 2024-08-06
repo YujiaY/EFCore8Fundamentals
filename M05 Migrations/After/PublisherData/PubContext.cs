@@ -10,22 +10,25 @@ public class PubContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(
-          "Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = PubDatabase"
-        );
+        const string connectionString = 
+            "data source=localhost,1533;initial catalog=PublisherApp;" +
+            "user id=sa;password=Patient0Zero;" +
+            "Encrypt=True;TrustServerCertificate=True;" +
+            "App=EntityFramework";
+        optionsBuilder.UseSqlServer(connectionString);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Author>().HasData(
-                     new Author { Id = 1, FirstName = "Rhoda", LastName = "Lerman" });
+                     new Author { Id = 1, FirstName = "Rhoda", LastName = "Lerman", Gender = "Female"});
 
         var authorList = new Author[]{
-                new Author {Id = 2, FirstName = "Ruth", LastName = "Ozeki" },
-                new Author {Id = 3, FirstName = "Sofia", LastName = "Segovia" },
-                new Author {Id = 4, FirstName = "Ursula K.", LastName = "LeGuin" },
-                new Author {Id = 5, FirstName = "Hugh", LastName = "Howey" },
-                new Author {Id = 6, FirstName = "Isabelle", LastName = "Allende" }
+                new Author {Id = 2, FirstName = "Ruth", LastName = "Ozeki", Gender = "Unknown" },
+                new Author {Id = 3, FirstName = "Sofia", LastName = "Segovia", Gender = "Unknown"  },
+                new Author {Id = 4, FirstName = "Ursula K.", LastName = "LeGuin", Gender = "Unknown"  },
+                new Author {Id = 5, FirstName = "Hugh", LastName = "Howey", Gender = "Unknown"  },
+                new Author {Id = 6, FirstName = "Isabelle", LastName = "Allende", Gender = "Unknown"  }
             };
         modelBuilder.Entity<Author>().HasData(authorList);
     }
