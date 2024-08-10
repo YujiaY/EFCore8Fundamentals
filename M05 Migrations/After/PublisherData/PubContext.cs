@@ -21,7 +21,7 @@ public class PubContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Author>().HasData(
-                     new Author { Id = 1, FirstName = "Rhoda", LastName = "Lerman", Gender = "Female"});
+                     new Author { Id = 1, FirstName = "Rhoda", LastName = "Lerman1", Gender = "Female"});
 
         var authorList = new Author[]{
                 new Author {Id = 2, FirstName = "Ruth", LastName = "Ozeki", Gender = "Unknown" },

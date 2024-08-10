@@ -15,7 +15,7 @@ namespace PublisherData.Migrations
                 columns: new[] { "Id", "FirstName", "LastName" },
                 values: new object[,]
                 {
-                    { 1, "Rhoda", "Lerman" },
+                    { 1, "Rhoda", "Lerman1" },
                     { 2, "Ruth", "Ozeki" },
                     { 3, "Sofia", "Segovia" },
                     { 4, "Ursula K.", "LeGuin" },
