@@ -14,9 +14,16 @@ public class PubContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(
-          "Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = PubDatabase"
-        ).LogTo(Console.WriteLine,
+        const string connectionString = 
+            "data source=localhost,1533;initial catalog=PublisherAppS12;" +
+            "user id=sa;password=Patient0Zero;" +
+            "Encrypt=True;TrustServerCertificate=True;" +
+            "App=EntityFramework";
+        Console.WriteLine("connectionString:" + connectionString);
+        optionsBuilder.UseSqlServer(connectionString);
+
+        optionsBuilder.UseSqlServer(connectionString)
+            .LogTo(Console.WriteLine,
                 new[] { DbLoggerCategory.Database.Command.Name },
                 LogLevel.Information)
         .EnableSensitiveDataLogging();
