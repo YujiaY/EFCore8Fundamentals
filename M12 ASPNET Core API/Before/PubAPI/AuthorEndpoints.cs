@@ -7,7 +7,7 @@ public static class AuthorEndpoints
 {
     public static void MapAuthorEndpoints (this IEndpointRouteBuilder routes)
     {
-        var group = routes.MapGroup("/api/AuthorEndpoints").WithTags(nameof(Author));
+        var group = routes.MapGroup("/api/Author").WithTags(nameof(Author));
 
         group.MapGet("/", async (PubContext db) =>
         {
@@ -16,7 +16,7 @@ public static class AuthorEndpoints
         .WithName("GetAllAuthors")
         .WithOpenApi();
 
-        group.MapGet("/{id}", async Task<Results<Ok<Author>, NotFound>> (int authorid, PubContext db) =>
+        group.MapGet("/{authorid}", async Task<Results<Ok<Author>, NotFound>> (int authorid, PubContext db) =>
         {
             return await db.Authors.AsNoTracking()
                 .FirstOrDefaultAsync(model => model.AuthorId == authorid)
@@ -27,7 +27,7 @@ public static class AuthorEndpoints
         .WithName("GetAuthorById")
         .WithOpenApi();
 
-        group.MapPut("/{id}", async Task<Results<Ok, NotFound>> (int authorid, Author author, PubContext db) =>
+        group.MapPut("/{authorid}", async Task<Results<Ok, NotFound>> (int authorid, Author author, PubContext db) =>
         {
             var affected = await db.Authors
                 .Where(model => model.AuthorId == authorid)
@@ -45,12 +45,12 @@ public static class AuthorEndpoints
         {
             db.Authors.Add(author);
             await db.SaveChangesAsync();
-            return TypedResults.Created($"/api/AuthorEndpoints/{author.AuthorId}", author);
+            return TypedResults.Created($"/api/Author/{author.AuthorId}", author);
         })
         .WithName("CreateAuthor")
         .WithOpenApi();
 
-        group.MapDelete("/{id}", async Task<Results<Ok, NotFound>> (int authorid, PubContext db) =>
+        group.MapDelete("/{authorid}", async Task<Results<Ok, NotFound>> (int authorid, PubContext db) =>
         {
             var affected = await db.Authors
                 .Where(model => model.AuthorId == authorid)
