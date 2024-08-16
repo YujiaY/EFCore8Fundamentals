@@ -20,7 +20,7 @@ public class PubContext : DbContext
             "Encrypt=True;TrustServerCertificate=True;" +
             "App=EntityFramework";
         Console.WriteLine("connectionString:" + connectionString);
-        optionsBuilder.UseSqlServer(connectionString);
+        // optionsBuilder.UseSqlServer(connectionString);
 
         optionsBuilder.UseSqlServer(connectionString)
             .LogTo(Console.WriteLine,

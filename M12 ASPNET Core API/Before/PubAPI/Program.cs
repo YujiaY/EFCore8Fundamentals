@@ -20,6 +20,21 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 
 WebApplication app = builder.Build();
 
+// Database initialization
+using (IServiceScope scope = app.Services.CreateScope())
+{
+    IServiceProvider services = scope.ServiceProvider;
+    PubContext dbContext = services.GetRequiredService<PubContext>();
+
+    // Ensures the database is created
+    dbContext.Database.EnsureCreated();
+
+    // To run migrations instead, use:
+    dbContext.Database.Migrate();
+
+    // Seed the database
+    // SeedData.Initialize(services);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
