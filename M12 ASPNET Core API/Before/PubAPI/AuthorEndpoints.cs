@@ -11,7 +11,7 @@ public static class AuthorEndpoints
 
         group.MapGet("/", async (PubContext db) =>
         {
-            return await db.Authors.ToListAsync();
+            return await db.Authors.AsNoTracking().ToListAsync();
         })
         .WithName("GetAllAuthors")
         .WithOpenApi();
@@ -20,7 +20,7 @@ public static class AuthorEndpoints
         {
             return await db.Authors.AsNoTracking()
                 .FirstOrDefaultAsync(model => model.AuthorId == authorid)
-                is Author model
+                is { } model
                     ? TypedResults.Ok(model)
                     : TypedResults.NotFound();
         })
