@@ -11,23 +11,27 @@ public class PubContext : DbContext
     public DbSet<Artist> Artists { get; set; }
     public DbSet<Cover> Covers { get; set; }
     public DbSet<AuthorByArtist> AuthorsByArtist { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        const string connectionString = 
-            "data source=localhost,1533;initial catalog=PublisherAppS12;" +
-            "user id=sa;password=Patient0Zero;" +
-            "Encrypt=True;TrustServerCertificate=True;" +
-            "App=EntityFramework";
-        Console.WriteLine("connectionString:" + connectionString);
-        // optionsBuilder.UseSqlServer(connectionString);
-
-        optionsBuilder.UseSqlServer(connectionString)
-            .LogTo(Console.WriteLine,
-                new[] { DbLoggerCategory.Database.Command.Name },
-                LogLevel.Information)
-        .EnableSensitiveDataLogging();
+    public PubContext(DbContextOptions<PubContext> options) : base(options)
+    {   
     }
+
+    // Below not needed as set up in the Program.cs
+    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    // {
+    //     const string connectionString = 
+    //         "data source=localhost,1533;initial catalog=PublisherAppS12;" +
+    //         "user id=sa;password=Patient0Zero;" +
+    //         "Encrypt=True;TrustServerCertificate=True;" +
+    //         "App=EntityFramework";
+    //     Console.WriteLine("connectionString:" + connectionString);
+    //     // optionsBuilder.UseSqlServer(connectionString);
+    //
+    //     optionsBuilder.UseSqlServer(connectionString)
+    //         .LogTo(Console.WriteLine,
+    //             new[] { DbLoggerCategory.Database.Command.Name },
+    //             LogLevel.Information)
+    //     .EnableSensitiveDataLogging();
+    // }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<AuthorByArtist>().HasNoKey()
