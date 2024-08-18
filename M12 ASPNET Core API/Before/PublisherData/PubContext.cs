@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Drawing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PublisherDomain;
 
@@ -63,12 +64,15 @@ public class PubContext : DbContext
             new Artist {ArtistId = 3, FirstName ="Katharine", LastName="Kuharic"} };
         modelBuilder.Entity<Artist>().HasData(someArtists);
 
+        modelBuilder.Entity<Cover>().Property(c => c.PrimaryColor)
+            .HasConversion(c => c.ToString(), s => Color.FromName(s));
+        
         var someCovers = new Cover[]{
-            new Cover {CoverId = 1, BookId=3,
+            new Cover {CoverId = 1, BookId=3, PrimaryColor = Color.Aqua,
                 DesignIdeas="How about a left hand in the dark?", DigitalOnly=false},
-            new Cover {CoverId = 2, BookId=2,
+            new Cover {CoverId = 2, BookId=2, PrimaryColor = Color.Red,
                 DesignIdeas= "Should we put a clock?", DigitalOnly=true},
-            new Cover {CoverId = 3, BookId=1,
+            new Cover {CoverId = 3, BookId=1, PrimaryColor = Color.Brown,
                 DesignIdeas="A big ear in the clouds?", DigitalOnly = false}};
         modelBuilder.Entity<Cover>().HasData(someCovers);
 
