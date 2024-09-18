@@ -49,9 +49,9 @@ public class PubContext : DbContext
         modelBuilder.Entity<Artist>().HasData(someArtists);
 
         var someCovers = new Cover[]{
-            new Cover {CoverId = 1, DesignIdeas="How about a left hand in the dark?", DigitalOnly=false},
-            new Cover {CoverId = 2, DesignIdeas= "Should we put a clock?", DigitalOnly=true},
-            new Cover {CoverId = 3, DesignIdeas="A big ear in the clouds?", DigitalOnly = false}};
+            new Cover {CoverId = 1, BookId = 1, DesignIdeas="How about a left hand in the dark?", DigitalOnly=false},
+            new Cover {CoverId = 2, BookId = 2, DesignIdeas= "Should we put a clock?", DigitalOnly=true},
+            new Cover {CoverId = 3, BookId = 3, DesignIdeas="A big ear in the clouds?", DigitalOnly = false}};
         modelBuilder.Entity<Cover>().HasData(someCovers);
 
 
