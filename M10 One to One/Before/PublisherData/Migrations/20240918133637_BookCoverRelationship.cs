@@ -37,6 +37,19 @@ namespace PublisherData.Migrations
                 keyValue: 3,
                 column: "BookId",
                 value: 3);
+            
+            migrationBuilder.UpdateData(table: "Covers",
+                keyColumn: "CoverId", keyValue: 4,
+                column: "BookId", value: 4);
+            migrationBuilder.UpdateData(table: "Covers",
+                keyColumn: "CoverId", keyValue: 5,
+                column: "BookId", value: 5);
+            migrationBuilder.UpdateData(table: "Covers",
+                keyColumn: "CoverId", keyValue: 6,
+                column: "BookId", value: 6);
+            migrationBuilder.UpdateData(table: "Covers",
+                keyColumn: "CoverId", keyValue: 7,
+                column: "BookId", value: 8);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Covers_BookId",
