@@ -17,7 +17,7 @@ namespace PublisherData.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -34,7 +34,7 @@ namespace PublisherData.Migrations
 
                     b.HasIndex("CoversCoverId");
 
-                    b.ToTable("ArtistCover");
+                    b.ToTable("ArtistCover", (string)null);
                 });
 
             modelBuilder.Entity("PublisherDomain.Artist", b =>
@@ -55,7 +55,7 @@ namespace PublisherData.Migrations
 
                     b.HasKey("ArtistId");
 
-                    b.ToTable("Artists");
+                    b.ToTable("Artists", (string)null);
 
                     b.HasData(
                         new
@@ -96,7 +96,7 @@ namespace PublisherData.Migrations
 
                     b.HasKey("AuthorId");
 
-                    b.ToTable("Authors");
+                    b.ToTable("Authors", (string)null);
 
                     b.HasData(
                         new
@@ -162,7 +162,7 @@ namespace PublisherData.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("Books");
+                    b.ToTable("Books", (string)null);
 
                     b.HasData(
                         new
@@ -199,9 +199,6 @@ namespace PublisherData.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CoverId"));
 
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
-
                     b.Property<string>("DesignIdeas")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -211,30 +208,24 @@ namespace PublisherData.Migrations
 
                     b.HasKey("CoverId");
 
-                    b.HasIndex("BookId")
-                        .IsUnique();
-
-                    b.ToTable("Covers");
+                    b.ToTable("Covers", (string)null);
 
                     b.HasData(
                         new
                         {
                             CoverId = 1,
-                            BookId = 0,
                             DesignIdeas = "How about a left hand in the dark?",
                             DigitalOnly = false
                         },
                         new
                         {
                             CoverId = 2,
-                            BookId = 0,
                             DesignIdeas = "Should we put a clock?",
                             DigitalOnly = true
                         },
                         new
                         {
                             CoverId = 3,
-                            BookId = 0,
                             DesignIdeas = "A big ear in the clouds?",
                             DigitalOnly = false
                         });
@@ -266,26 +257,9 @@ namespace PublisherData.Migrations
                     b.Navigation("Author");
                 });
 
-            modelBuilder.Entity("PublisherDomain.Cover", b =>
-                {
-                    b.HasOne("PublisherDomain.Book", "Book")
-                        .WithOne("Cover")
-                        .HasForeignKey("PublisherDomain.Cover", "BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Book");
-                });
-
             modelBuilder.Entity("PublisherDomain.Author", b =>
                 {
                     b.Navigation("Books");
-                });
-
-            modelBuilder.Entity("PublisherDomain.Book", b =>
-                {
-                    b.Navigation("Cover")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
