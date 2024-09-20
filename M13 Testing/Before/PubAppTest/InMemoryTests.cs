@@ -4,17 +4,21 @@ using PublisherData;
 using PublisherDomain;
 using System.Diagnostics;
 using Microsoft.Data.Sqlite;
+using PublisherConsole;
 
 namespace PubAppTest;
 
 [TestClass]
 public class InMemoryTests
 {
-    const string connectionString = 
-        "data source=localhost,1533;initial catalog=PublisherAppTestDb;" +
-        "user id=sa;password=Patient0Zero;" +
-        "Encrypt=True;TrustServerCertificate=True;" +
-        "App=EntityFramework";
+    private static PubContext SetUpSQLiteMemoryContextWithOpenConnection()
+    {
+        var builder = new DbContextOptionsBuilder<PubContext>().UseSqlite("Filename=:memory:");
+        var context = new PubContext(builder.Options);
+        context.Database.OpenConnection();
+        context.Database.EnsureCreated();
+        return context;
+    }
     
     [TestMethod]
     public void CanInsertAuthorIntoDatabase()
@@ -38,17 +42,30 @@ public class InMemoryTests
 
             Assert.AreNotEqual(0, author.AuthorId);
         }
-
     }
 
     [TestMethod]
     public void ChangeTrackerIdentifiesAddedAuthor()
     {
-        var builder = new DbContextOptionsBuilder<PubContext>().UseSqlServer(connectionString);
-         
-        using var context = new PubContext(builder.Options);
+        using PubContext context = SetUpSQLiteMemoryContextWithOpenConnection();
+        
         var author = new Author { FirstName = "a", LastName = "b" };
         context.Authors.Add(author);
         Assert.AreEqual(EntityState.Added, context.Entry(author).State);
+    }
+    
+    [TestMethod]
+    public void InsertAuthorsReturnsCorrectResultNumber()
+    {
+        using PubContext context = SetUpSQLiteMemoryContextWithOpenConnection();
+        
+        var authorList = new Dictionary<string, string>
+        { { "a" , "b" },
+            { "c" , "d" },
+            { "d" , "e" }
+        };
+
+        var dl = new DataLogic(context);
+        Assert.AreEqual(authorList.Count, dl.ImportAuthors(authorList));
     }
 }
