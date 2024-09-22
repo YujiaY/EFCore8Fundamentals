@@ -14,16 +14,22 @@ public class PubContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(
-          "Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = PubDatabase"
-        ).LogTo(Console.WriteLine,
-                new[] { DbLoggerCategory.Database.Command.Name },
-                LogLevel.Information)
-        .EnableSensitiveDataLogging();
+        const string connectionString = 
+            "data source=localhost,1533;initial catalog=PublisherAppNew1;" +
+            "user id=sa;password=Patient0Zero;" +
+            "Encrypt=True;TrustServerCertificate=True;" +
+            "App=EntityFramework";
+        optionsBuilder.UseSqlServer(connectionString)
+            .LogTo(Console.WriteLine, LogLevel.Trace)
+            .EnableSensitiveDataLogging();
+
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<AuthorByArtist>().HasNoKey();
+        modelBuilder.Entity<AuthorByArtist>()
+            .HasNoKey()
+            .ToView(nameof(AuthorsByArtist));
+        
         modelBuilder.Entity<Author>().HasData(
             new Author { AuthorId = 1, FirstName = "Rhoda", LastName = "Lerman" });
 
