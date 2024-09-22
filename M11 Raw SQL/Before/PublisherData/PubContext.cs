@@ -24,7 +24,10 @@ public class PubContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<AuthorByArtist>().HasNoKey();
-        var authorList = new Author[]{
+        modelBuilder.Entity<Author>().HasData(
+            new Author { AuthorId = 1, FirstName = "Rhoda", LastName = "Lerman" });
+
+        var authorList = new Author[]{ 
             new Author {AuthorId = 2, FirstName = "Ruth", LastName = "Ozeki" },
             new Author {AuthorId = 3, FirstName = "Sofia", LastName = "Segovia" },
             new Author {AuthorId = 4, FirstName = "Ursula K.", LastName = "LeGuin" },
