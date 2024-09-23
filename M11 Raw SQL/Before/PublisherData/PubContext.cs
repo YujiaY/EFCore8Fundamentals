@@ -66,6 +66,12 @@ public class PubContext : DbContext
                 DesignIdeas="A big ear in the clouds?", DigitalOnly = false}};
         modelBuilder.Entity<Cover>().HasData(someCovers);
 
+        modelBuilder.Entity<Author>()
+            .InsertUsingStoredProcedure("AuthorInsert", spbuilder => 
+                spbuilder.HasParameter(a => a.FirstName)
+                    .HasParameter(a => a.LastName)
+                    .HasResultColumn(a => a.AuthorId)
+            );
 
     }
 }
