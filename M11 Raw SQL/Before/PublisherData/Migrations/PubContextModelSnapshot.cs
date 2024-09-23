@@ -34,7 +34,7 @@ namespace PublisherData.Migrations
 
                     b.HasIndex("CoversCoverId");
 
-                    b.ToTable("ArtistCover");
+                    b.ToTable("ArtistCover", (string)null);
                 });
 
             modelBuilder.Entity("PublisherDomain.Artist", b =>
@@ -55,7 +55,7 @@ namespace PublisherData.Migrations
 
                     b.HasKey("ArtistId");
 
-                    b.ToTable("Artists");
+                    b.ToTable("Artists", (string)null);
 
                     b.HasData(
                         new
@@ -96,7 +96,7 @@ namespace PublisherData.Migrations
 
                     b.HasKey("AuthorId");
 
-                    b.ToTable("Authors");
+                    b.ToTable("Authors", (string)null);
 
                     b.HasData(
                         new
@@ -137,20 +137,6 @@ namespace PublisherData.Migrations
                         });
                 });
 
-            modelBuilder.Entity("PublisherDomain.AuthorByArtist", b =>
-                {
-                    b.Property<string>("Artist")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Author")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.ToTable((string)null);
-
-                    b.ToView("AuthorsByArtist", (string)null);
-                });
-
             modelBuilder.Entity("PublisherDomain.Book", b =>
                 {
                     b.Property<int>("BookId")
@@ -176,7 +162,7 @@ namespace PublisherData.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("Books");
+                    b.ToTable("Books", (string)null);
 
                     b.HasData(
                         new
@@ -228,7 +214,7 @@ namespace PublisherData.Migrations
                     b.HasIndex("BookId")
                         .IsUnique();
 
-                    b.ToTable("Covers");
+                    b.ToTable("Covers", (string)null);
 
                     b.HasData(
                         new
